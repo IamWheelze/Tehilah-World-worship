@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Media Hub | Tehilah World Worship</title>
+  <meta name="description" content="Videos, photos, and highlights from Tehilah World Worship — worship content from nations around the world.">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">Tehilah <span>World Worship</span></a>
+      <button class="nav-toggle" aria-label="Toggle navigation"><i class="fas fa-bars"></i></button>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="schedule.html">Schedule</a></li>
+        <li><a href="watch-live.html">Watch Live</a></li>
+        <li><a href="media-hub.html" class="active">Media Hub</a></li>
+        <li><a href="participate.html">Participate</a></li>
+        <li><a href="volunteer.html">Volunteer</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="https://luma.com/tuikiyd9" target="_blank" rel="noopener" class="nav-register"><i class="fas fa-pen-to-square"></i> Register</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <a href="https://luma.com/tuikiyd9" target="_blank" rel="noopener" class="floating-register">
+    <i class="fas fa-pen-to-square"></i> Register Now
+  </a>
+
+  <!-- Page Hero -->
+  <section class="page-hero">
+    <div class="container">
+      <h1>Media Hub</h1>
+      <p>Videos, photos, and highlights from our global worship community.</p>
+    </div>
+  </section>
+
+  <!-- Media Hub -->
+  <section class="section">
+    <div class="container">
+
+      <!-- Filters -->
+      <div class="media-filters" id="media-filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="Nation Videos">Nation Videos</button>
+        <button class="filter-btn" data-filter="Countdown Clips">Countdown Clips</button>
+        <button class="filter-btn" data-filter="Participation Photos">Participation Photos</button>
+        <button class="filter-btn" data-filter="Live Highlights">Live Highlights</button>
+        <button class="filter-btn" data-filter="Recap & Testimonies">Recap &amp; Testimonies</button>
+      </div>
+
+      <!-- Media Grid -->
+      <div class="media-grid" id="media-grid">
+        <!-- Populated by JS from media-data.js -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- How to Add Media (admin note) -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="content-block reveal" style="text-align:center;">
+        <h2>Want to Submit Media?</h2>
+        <div class="section-divider"></div>
+        <p>Share your worship videos, photos, and testimonies from your nation. Head to the Participate page to learn how to submit your content.</p>
+        <a href="participate.html" class="btn btn-primary" style="margin-top:1rem;">
+          <i class="fas fa-paper-plane"></i> Go to Participate
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>Tehilah <span>World Worship</span></h3>
+          <p>A global movement of prayer and worship across nations. March 1–21, 2025.</p>
+          <div class="social-links" style="margin-top:1rem;">
+            <a href="https://www.instagram.com/tehilahworldworship?igsh=OGNpNnZlYnFkcG0z" target="_blank" rel="noopener" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.tiktok.com/@tehilahworldworsh?_r=1&_t=ZG-945OzaO6s9A" target="_blank" rel="noopener" class="social-link" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+            <a href="#" class="social-link" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="#" class="social-link" aria-label="MixLR"><i class="fas fa-headphones"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Pages</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="schedule.html">Schedule</a></li>
+            <li><a href="watch-live.html">Watch Live</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Engage</h4>
+          <ul>
+            <li><a href="media-hub.html">Media Hub</a></li>
+            <li><a href="participate.html">Participate</a></li>
+            <li><a href="volunteer.html">Volunteer</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <ul>
+            <li><a href="https://luma.com/tuikiyd9" target="_blank" rel="noopener">Register (Luma)</a></li>
+            <li><a href="https://www.instagram.com/tehilahworldworship?igsh=OGNpNnZlYnFkcG0z" target="_blank" rel="noopener">Instagram</a></li>
+            <li><a href="https://www.tiktok.com/@tehilahworldworsh?_r=1&_t=ZG-945OzaO6s9A" target="_blank" rel="noopener">TikTok</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Tehilah World Worship. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/media-data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
