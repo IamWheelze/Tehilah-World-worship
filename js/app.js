@@ -48,7 +48,7 @@ function initCountdown() {
     const diff = target - now;
 
     if (diff <= 0) {
-      el.innerHTML = '<div class="countdown-label">The worship has begun!</div>';
+      el.innerHTML = '<div class="countdown-label">The 24-Hour Worship Has Concluded — Thank you for worshipping with us! 🙏</div>';
       return;
     }
 
@@ -208,42 +208,67 @@ function initFeaturedMedia() {
 }
 
 // ===================== FORM HANDLING =====================
+// Forms use Formspree (https://formspree.io) to deliver submissions to email.
+// Sign up free at formspree.io, create two forms, and replace the IDs below.
+// After first submission Formspree sends a confirmation email — click it to activate.
+const FORMSPREE_CONTACT_URL   = 'https://formspree.io/f/xpwzerkp';   // contact form
+const FORMSPREE_VOLUNTEER_URL = 'https://formspree.io/f/xpwzerkp';   // volunteer form (same inbox)
+
+function submitToFormspree(form, url, successText) {
+  const data = new FormData(form);
+  const payload = Object.fromEntries(data.entries());
+  const btn = form.querySelector('[type="submit"]');
+  const msg = form.querySelector('.form-submit-msg');
+
+  if (btn) btn.disabled = true;
+
+  fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+    .then(r => r.json())
+    .then(res => {
+      if (msg) {
+        if (res.ok) {
+          msg.classList.remove('error');
+          msg.classList.add('success');
+          msg.textContent = successText;
+          form.reset();
+        } else {
+          msg.classList.remove('success');
+          msg.classList.add('error');
+          msg.textContent = 'Something went wrong. Please email us directly at joshuaegbodofo0@gmail.com';
+        }
+      }
+    })
+    .catch(() => {
+      if (msg) {
+        msg.classList.remove('success');
+        msg.classList.add('error');
+        msg.textContent = 'Network error. Please email us at joshuaegbodofo0@gmail.com';
+      }
+    })
+    .finally(() => {
+      if (btn) btn.disabled = false;
+    });
+}
+
 function initVolunteerForm() {
   const form = document.getElementById('volunteer-form');
   if (!form) return;
-
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    const data = new FormData(form);
-    const values = Object.fromEntries(data.entries());
-    console.log('Volunteer form submitted:', values);
-
-    // Show success message
-    const msg = form.querySelector('.form-submit-msg');
-    if (msg) {
-      msg.classList.add('success');
-      msg.textContent = 'Thank you for volunteering! We will be in touch soon.';
-    }
-    form.reset();
+    submitToFormspree(form, FORMSPREE_VOLUNTEER_URL, 'Thank you for volunteering! We will be in touch soon.');
   });
 }
 
 function initContactForm() {
   const form = document.getElementById('contact-form');
   if (!form) return;
-
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    const data = new FormData(form);
-    const values = Object.fromEntries(data.entries());
-    console.log('Contact form submitted:', values);
-
-    const msg = form.querySelector('.form-submit-msg');
-    if (msg) {
-      msg.classList.add('success');
-      msg.textContent = 'Thank you for your message! We will respond soon.';
-    }
-    form.reset();
+    submitToFormspree(form, FORMSPREE_CONTACT_URL, 'Thank you for your message! We will respond soon.');
   });
 }
 
