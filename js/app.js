@@ -211,8 +211,9 @@ function initFeaturedMedia() {
 // Forms use Formspree (https://formspree.io) to deliver submissions to email.
 // Sign up free at formspree.io, create two forms, and replace the IDs below.
 // After first submission Formspree sends a confirmation email — click it to activate.
-const FORMSPREE_CONTACT_URL   = 'https://formspree.io/f/xpwzerkp';   // contact form
-const FORMSPREE_VOLUNTEER_URL = 'https://formspree.io/f/xpwzerkp';   // volunteer form (same inbox)
+const FORMSPREE_CONTACT_URL     = 'https://formspree.io/joshuaegbodofo0@gmail.com';
+const FORMSPREE_VOLUNTEER_URL   = 'https://formspree.io/joshuaegbodofo0@gmail.com';
+const FORMSPREE_PARTICIPATE_URL = 'https://formspree.io/joshuaegbodofo0@gmail.com';
 
 function submitToFormspree(form, url, successText) {
   const data = new FormData(form);
@@ -298,6 +299,38 @@ function escapeAttr(str) {
   return str.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
+function initParticipateForm() {
+  const form = document.getElementById('participate-form');
+  if (!form) return;
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const msg = document.getElementById('participate-msg');
+    const btn = form.querySelector('[type="submit"]');
+    if (btn) btn.disabled = true;
+    const payload = Object.fromEntries(new FormData(form).entries());
+    fetch(FORMSPREE_PARTICIPATE_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+      .then(r => r.json())
+      .then(res => {
+        if (msg) {
+          msg.classList.toggle('success', !!res.ok);
+          msg.classList.toggle('error', !res.ok);
+          msg.textContent = res.ok
+            ? 'Thank you! Your card has been submitted. Now send your photo via WhatsApp!'
+            : 'Something went wrong. Please send your details to joshuaegbodofo0@gmail.com';
+        }
+        if (res.ok) form.reset();
+      })
+      .catch(() => {
+        if (msg) { msg.classList.add('error'); msg.textContent = 'Network error. Please try WhatsApp instead.'; }
+      })
+      .finally(() => { if (btn) btn.disabled = false; });
+  });
+}
+
 // ===================== INIT =====================
 document.addEventListener('DOMContentLoaded', () => {
   initNav();
@@ -307,4 +340,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initFeaturedMedia();
   initVolunteerForm();
   initContactForm();
+  initParticipateForm();
 });

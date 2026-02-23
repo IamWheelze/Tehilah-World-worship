@@ -1,23 +1,23 @@
 /* ============================================
    Tehilah World Worship - Global Styles
-   Theme: Deep navy/black + white/gold accents
+   Theme: Deep purple + gold accents
    ============================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
 
 /* --- CSS Variables --- */
 :root {
-  --color-bg: #050d1a;
-  --color-bg-alt: #0a1628;
-  --color-surface: #0f1f3a;
-  --color-surface-light: #162950;
+  --color-bg: #0d0020;
+  --color-bg-alt: #150035;
+  --color-surface: #1e0045;
+  --color-surface-light: #2d0066;
   --color-gold: #d4a853;
   --color-gold-light: #e8c97a;
   --color-gold-dark: #b8922e;
   --color-white: #ffffff;
-  --color-text: #e0e8f0;
-  --color-text-muted: #8899b0;
-  --color-border: #1e3050;
+  --color-text: #ecdcff;
+  --color-text-muted: #a888cc;
+  --color-border: #3d1070;
   --font-heading: 'Playfair Display', Georgia, serif;
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --max-width: 1200px;
@@ -92,7 +92,7 @@ h3 { font-size: clamp(1.2rem, 2.5vw, 1.5rem); }
   left: 0;
   right: 0;
   height: var(--nav-height);
-  background: rgba(5, 13, 26, 0.95);
+  background: rgba(13, 0, 32, 0.96);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--color-border);
   z-index: 1000;
@@ -318,11 +318,21 @@ h3 { font-size: clamp(1.2rem, 2.5vw, 1.5rem); }
   inset: 0;
   background:
     radial-gradient(ellipse at 20% 50%, rgba(212, 168, 83, 0.08) 0%, transparent 60%),
-    radial-gradient(ellipse at 80% 20%, rgba(30, 60, 120, 0.15) 0%, transparent 50%);
+    radial-gradient(ellipse at 80% 20%, rgba(120, 40, 220, 0.18) 0%, transparent 50%);
+}
+
+#hero-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  display: block;
 }
 
 .hero-content {
   position: relative;
+  z-index: 1;
   max-width: 800px;
 }
 

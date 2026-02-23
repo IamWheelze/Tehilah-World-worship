@@ -44,30 +44,86 @@
     </div>
   </section>
 
-  <!-- Photo Participation -->
+  <!-- Photo Participation + Zoom -->
   <section class="section">
     <div class="container">
       <div class="section-header reveal">
-        <h2>Photo Participation</h2>
+        <h2>Join &amp; Participate</h2>
         <div class="section-divider"></div>
-        <p>Take a photo using the template below and share it with us!</p>
+        <p>Register your attendance, submit your photo, and join us live on Zoom.</p>
       </div>
 
-      <div class="template-card reveal">
-        My name is <span class="blank">Your Name</span><br>
-        I am joining Tehilah World Worship<br>
-        From <span class="blank">Your Country</span>
-      </div>
+      <div class="two-col" style="align-items:flex-start;gap:3rem;">
 
-      <div class="guidelines-box reveal" style="max-width:640px;margin:2rem auto;">
-        <h3>How to Submit Your Photo</h3>
-        <ul>
-          <li>Write or print the template text on a card or paper</li>
-          <li>Fill in your name and country</li>
-          <li>Take a clear, well-lit photo holding your card</li>
-          <li>Post on Instagram or TikTok and tag <strong>@tehilahworldworship</strong></li>
-          <li>Or send directly to our team via the Contact page</li>
-        </ul>
+        <!-- Participation Form -->
+        <div>
+          <h3 class="reveal" style="margin-bottom:1.5rem;color:var(--color-gold);">Your Participation Card</h3>
+          <p class="reveal" style="margin-bottom:1.5rem;color:var(--color-text-muted);">Fill in your details below and send us your photo via WhatsApp. We will add you to our global participation wall!</p>
+
+          <form id="participate-form" class="reveal" action="https://formspree.io/joshuaegbodofo0@gmail.com" method="POST">
+            <div class="template-card" style="margin-bottom:1.5rem;font-size:1.05rem;">
+              My name is <span class="blank" id="preview-name">Your Name</span><br>
+              I am joining Tehilah World Worship<br>
+              From <span class="blank" id="preview-country">Your Country</span>
+            </div>
+
+            <div class="form-group">
+              <label for="pt-name">Your Full Name *</label>
+              <input type="text" id="pt-name" name="name" class="form-input" placeholder="Your full name" required
+                     oninput="document.getElementById('preview-name').textContent = this.value || 'Your Name'">
+            </div>
+            <div class="form-group">
+              <label for="pt-country">Your Country *</label>
+              <input type="text" id="pt-country" name="country" class="form-input" placeholder="e.g. Nigeria, Germany, Brazil…" required
+                     oninput="document.getElementById('preview-country').textContent = this.value || 'Your Country'">
+            </div>
+            <div class="form-group">
+              <label for="pt-email">Email (optional — for updates)</label>
+              <input type="email" id="pt-email" name="email" class="form-input" placeholder="your@email.com">
+            </div>
+            <input type="hidden" name="_subject" value="New Participation Card - Tehilah World Worship">
+
+            <button type="submit" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;">
+              <i class="fas fa-paper-plane"></i> Submit My Card
+            </button>
+            <div class="form-submit-msg" id="participate-msg"></div>
+          </form>
+
+          <div class="guidelines-box reveal" style="margin-top:1.5rem;">
+            <h4 style="margin-bottom:0.75rem;"><i class="fab fa-whatsapp" style="color:#25d366;margin-right:0.5rem;"></i>Send Your Photo</h4>
+            <p style="font-size:0.95rem;">After submitting, take a photo holding your participation card and send it to us on WhatsApp:</p>
+            <a href="https://wa.me/4915510653317" target="_blank" rel="noopener" class="btn btn-sm btn-secondary" style="margin-top:0.75rem;">
+              <i class="fab fa-whatsapp"></i> Send Photo on WhatsApp
+            </a>
+          </div>
+        </div>
+
+        <!-- Zoom Join Card -->
+        <div>
+          <h3 class="reveal" style="margin-bottom:1.5rem;color:var(--color-gold);">Join Us Live on Zoom</h3>
+          <div class="card reveal" style="text-align:center;padding:2.5rem 2rem;">
+            <div class="card-icon" style="margin:0 auto 1.25rem;"><i class="fas fa-video"></i></div>
+            <h3 style="margin-bottom:0.75rem;">Tehilah World Worship</h3>
+            <p style="margin-bottom:0.5rem;color:var(--color-text-muted);">24-Hour Worship • March 20–21, 2026</p>
+            <p style="margin-bottom:1.5rem;color:var(--color-text-muted);font-size:0.9rem;">Meeting ID: <strong style="color:var(--color-gold);">868 4893 7283</strong></p>
+            <a href="https://us05web.zoom.us/j/86848937283?pwd=o5X2eNk91g2ZLBl6A3T1h0MTFbhF5n.1"
+               target="_blank" rel="noopener"
+               class="btn btn-primary btn-lg" style="justify-content:center;width:100%;">
+              <i class="fas fa-video"></i> Join Zoom Meeting
+            </a>
+            <p style="margin-top:1rem;font-size:0.82rem;color:var(--color-text-muted);">Click the button above or paste the link into your Zoom app.</p>
+          </div>
+
+          <div class="card reveal" style="margin-top:1.5rem;text-align:center;padding:1.75rem;">
+            <div class="card-icon" style="margin:0 auto 1rem;font-size:1.5rem;"><i class="fab fa-whatsapp" style="color:#25d366;"></i></div>
+            <h4 style="margin-bottom:0.5rem;">Questions? Contact Us</h4>
+            <p style="color:var(--color-text-muted);font-size:0.9rem;margin-bottom:1rem;">Reach us directly on WhatsApp for help joining or any questions.</p>
+            <a href="https://wa.me/4915510653317" target="_blank" rel="noopener" class="btn btn-secondary btn-sm">
+              <i class="fab fa-whatsapp"></i> WhatsApp Us
+            </a>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -149,6 +205,7 @@
             <a href="https://www.instagram.com/tehilahworldworship?igsh=OGNpNnZlYnFkcG0z" target="_blank" rel="noopener" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
             <a href="https://www.tiktok.com/@tehilahworldworsh?_r=1&_t=ZG-945OzaO6s9A" target="_blank" rel="noopener" class="social-link" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
             <a href="#" class="social-link" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="https://wa.me/4915510653317" target="_blank" rel="noopener" class="social-link" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
             <a href="#" class="social-link" aria-label="MixLR"><i class="fas fa-headphones"></i></a>
           </div>
         </div>
