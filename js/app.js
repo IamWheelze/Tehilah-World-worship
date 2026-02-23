@@ -40,15 +40,15 @@ function initCountdown() {
   const el = document.getElementById('countdown');
   if (!el) return;
 
-  // Target: March 20, 2025 at 15:00 CET (UTC+1)
-  const target = new Date('2025-03-20T14:00:00Z'); // 15:00 CET = 14:00 UTC
+  // Target: March 20, 2026 at 15:00 CET (UTC+1)
+  const target = new Date('2026-03-20T14:00:00Z'); // 15:00 CET = 14:00 UTC
 
   function update() {
     const now = new Date();
     const diff = target - now;
 
     if (diff <= 0) {
-      el.innerHTML = '<div class="countdown-label">The 24-Hour Worship Has Concluded — Thank you for worshipping with us! 🙏</div>';
+      el.innerHTML = '<div class="countdown-label">The 24-Hour Worship Has Begun — Join us now! 🙏</div>';
       return;
     }
 
