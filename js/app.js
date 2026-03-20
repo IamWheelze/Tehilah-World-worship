@@ -208,12 +208,9 @@ function initFeaturedMedia() {
 }
 
 // ===================== FORM HANDLING =====================
-// Forms use Formspree (https://formspree.io) to deliver submissions to email.
-// Sign up free at formspree.io, create two forms, and replace the IDs below.
-// After first submission Formspree sends a confirmation email — click it to activate.
-const FORMSPREE_CONTACT_URL     = 'https://formspree.io/joshuaegbodofo0@gmail.com';
-const FORMSPREE_VOLUNTEER_URL   = 'https://formspree.io/joshuaegbodofo0@gmail.com';
-const FORMSPREE_PARTICIPATE_URL = 'https://formspree.io/joshuaegbodofo0@gmail.com';
+const FORMSPREE_CONTACT_URL     = 'https://formspree.io/f/mdkyyqjd';
+const FORMSPREE_VOLUNTEER_URL   = 'https://formspree.io/f/mdkyyqjd';
+const FORMSPREE_PARTICIPATE_URL = 'https://formspree.io/f/mdkyyqjd';
 
 function submitToFormspree(form, url, successText) {
   const data = new FormData(form);
