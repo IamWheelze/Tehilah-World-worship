@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coordinator Dashboard | Tehilah World Worship</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    /* ── Dashboard-specific styles ── */
+    .dash-tabs {
+      display: flex;
+      gap: 0.5rem;
+      border-bottom: 2px solid var(--color-border);
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    .dash-tab {
+      padding: 0.65rem 1.4rem;
+      background: transparent;
+      border: none;
+      border-bottom: 3px solid transparent;
+      color: var(--color-text-muted);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: color var(--transition), border-color var(--transition);
+      margin-bottom: -2px;
+    }
+    .dash-tab:hover { color: var(--color-gold); }
+    .dash-tab.active {
+      color: var(--color-gold);
+      border-bottom-color: var(--color-gold);
+    }
+    .dash-panel { display: none; }
+    .dash-panel.active { display: block; }
+
+    /* ── Metrics ── */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .metric-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      padding: 1.2rem 1.4rem;
+      text-align: center;
+    }
+    .metric-card .metric-val {
+      font-size: 2rem;
+      font-weight: 700;
+      font-family: var(--font-heading);
+      color: var(--color-gold);
+      display: block;
+    }
+    .metric-card .metric-lbl {
+      font-size: 0.8rem;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: 0.25rem;
+    }
+
+    /* ── Coverage bar ── */
+    .coverage-bar-wrap {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      padding: 1.2rem 1.4rem;
+      margin-bottom: 2rem;
+    }
+    .coverage-bar-wrap h4 {
+      font-size: 0.9rem;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.75rem;
+    }
+    .coverage-bar-track {
+      background: rgba(255,255,255,0.08);
+      border-radius: 6px;
+      height: 20px;
+      overflow: hidden;
+      display: flex;
+    }
+    .coverage-bar-fill {
+      background: linear-gradient(90deg, #22c55e, #16a34a);
+      height: 100%;
+      border-radius: 6px 0 0 6px;
+      transition: width 0.6s ease;
+    }
+    .coverage-bar-gap {
+      background: rgba(239,68,68,0.45);
+      height: 100%;
+    }
+    .coverage-bar-legend {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 0.6rem;
+      font-size: 0.82rem;
+      color: var(--color-text-muted);
+    }
+    .coverage-bar-legend span { display: flex; align-items: center; gap: 0.4rem; }
+    .legend-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+    .legend-dot.green { background: #22c55e; }
+    .legend-dot.red   { background: rgba(239,68,68,0.7); }
+
+    /* ── Leader quick reference ── */
+    .leader-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    .leader-table th {
+      background: var(--color-surface-light);
+      color: var(--color-gold);
+      text-align: left;
+      padding: 0.6rem 0.9rem;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+    .leader-table td { padding: 0.55rem 0.9rem; border-bottom: 1px solid var(--color-border); }
+    .leader-table tr:last-child td { border-bottom: none; }
+    .leader-table tr:hover td { background: rgba(255,255,255,0.03); }
+    .badge {
+      display: inline-block;
+      padding: 0.15rem 0.55rem;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      margin-right: 0.3rem;
+    }
+    .badge-cluster { background: rgba(212,168,83,0.2); color: var(--color-gold); }
+    .badge-fr      { background: rgba(99,102,241,0.25); color: #a5b4fc; }
+    .badge-audio   { background: rgba(20,184,166,0.2); color: #5eead4; }
+    .badge-both    { background: rgba(34,197,94,0.15); color: #86efac; }
+    .badge-double  { background: rgba(244,114,182,0.2); color: #f9a8d4; }
+
+    /* ── Timetable ── */
+    .slot-block {
+      border-radius: 10px;
+      border: 1px solid var(--color-border);
+      margin-bottom: 1.2rem;
+      overflow: hidden;
+    }
+    .slot-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.8rem 1.2rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    .slot-header .slot-title { display: flex; align-items: center; gap: 0.6rem; }
+    .slot-status-pill {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.2rem 0.7rem;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    /* Covered */
+    .slot-covered .slot-header        { background: rgba(34,197,94,0.12); border-bottom: 1px solid rgba(34,197,94,0.25); }
+    .slot-covered .slot-status-pill   { background: rgba(34,197,94,0.2); color: #86efac; border: 1px solid rgba(34,197,94,0.35); }
+    /* Partial */
+    .slot-partial .slot-header        { background: rgba(245,158,11,0.10); border-bottom: 1px solid rgba(245,158,11,0.25); }
+    .slot-partial .slot-status-pill   { background: rgba(245,158,11,0.2); color: #fcd34d; border: 1px solid rgba(245,158,11,0.35); }
+    /* Empty */
+    .slot-empty { border: 2px dashed rgba(239,68,68,0.45); }
+    .slot-empty .slot-header          { background: rgba(239,68,68,0.08); border-bottom: 1px dashed rgba(239,68,68,0.3); }
+    .slot-empty .slot-status-pill     { background: rgba(239,68,68,0.18); color: #fca5a5; border: 1px solid rgba(239,68,68,0.35); }
+
+    .slot-body { padding: 0.6rem 0; }
+    .slot-row {
+      display: grid;
+      grid-template-columns: 130px 1fr auto;
+      gap: 0.5rem 1rem;
+      padding: 0.5rem 1.2rem;
+      align-items: center;
+      font-size: 0.88rem;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .slot-row:last-child { border-bottom: none; }
+    .slot-row .time { color: var(--color-gold); font-weight: 600; white-space: nowrap; }
+    .slot-row .name { color: var(--color-white); font-weight: 500; }
+    .slot-row .tags { display: flex; flex-wrap: wrap; gap: 0.3rem; justify-content: flex-end; }
+    .gap-row {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 0.5rem 1rem;
+      padding: 0.45rem 1.2rem;
+      align-items: center;
+      font-size: 0.84rem;
+      background: rgba(245,158,11,0.06);
+      border-top: 1px dashed rgba(245,158,11,0.25);
+    }
+    .gap-row .time { color: #fbbf24; font-weight: 600; white-space: nowrap; }
+    .gap-row .gap-label { color: var(--color-text-muted); font-style: italic; }
+    .empty-slot-msg {
+      padding: 1.4rem 1.2rem;
+      color: var(--color-text-muted);
+      font-style: italic;
+      font-size: 0.9rem;
+    }
+    .buffer-note {
+      margin-top: 1.5rem;
+      padding: 0.9rem 1.2rem;
+      background: rgba(212,168,83,0.07);
+      border: 1px dashed var(--color-gold-dark);
+      border-radius: 8px;
+      font-size: 0.88rem;
+      color: var(--color-text-muted);
+    }
+    .buffer-note strong { color: var(--color-gold); }
+
+    /* ── Email Composer ── */
+    .email-composer { max-width: 700px; }
+    .email-composer .form-group { margin-bottom: 1.2rem; }
+    .email-composer label { display: block; font-size: 0.85rem; color: var(--color-text-muted); margin-bottom: 0.4rem; }
+    .email-composer input,
+    .email-composer select,
+    .email-composer textarea {
+      width: 100%;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 6px;
+      color: var(--color-text);
+      padding: 0.65rem 0.9rem;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+    }
+    .email-composer textarea { min-height: 200px; resize: vertical; }
+    .email-composer input:focus,
+    .email-composer select:focus,
+    .email-composer textarea:focus {
+      outline: none;
+      border-color: var(--color-gold);
+    }
+    .email-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid var(--color-border);
+      color: var(--color-text-muted);
+      padding: 0.65rem 1.4rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: border-color var(--transition), color var(--transition);
+    }
+    .btn-secondary:hover { border-color: var(--color-gold); color: var(--color-gold); }
+    .save-indicator {
+      font-size: 0.8rem;
+      color: #22c55e;
+      margin-top: 0.5rem;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">
+        <img src="images/logo.png" alt="Tehilah World Worship" class="nav-logo">
+        Tehilah <span>World Worship</span>
+      </a>
+      <button class="nav-toggle" aria-label="Toggle navigation"><i class="fas fa-bars"></i></button>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="schedule.html">Schedule</a></li>
+        <li><a href="watch-live.html">Watch Live</a></li>
+        <li><a href="media-hub.html">Media Hub</a></li>
+        <li><a href="participate.html">Participate</a></li>
+        <li><a href="volunteer.html">Volunteer</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="https://luma.com/tuikiyd9" target="_blank" rel="noopener" class="nav-register"><i class="fas fa-pen-to-square"></i> Register</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Page Hero -->
+  <section class="page-hero">
+    <div class="container">
+      <h1>Coordinator Dashboard</h1>
+      <p>12-Hour Worship — Slot assignments &amp; coverage overview. April 13–14, 2026.</p>
+    </div>
+  </section>
+
+  <!-- Dashboard Body -->
+  <section class="section">
+    <div class="container">
+
+      <!-- Tabs -->
+      <div class="dash-tabs" role="tablist">
+        <button class="dash-tab active" data-panel="overview"  role="tab" aria-selected="true">
+          <i class="fas fa-chart-pie"></i> Overview
+        </button>
+        <button class="dash-tab" data-panel="timetable" role="tab" aria-selected="false">
+          <i class="fas fa-clock"></i> Timetable
+        </button>
+        <button class="dash-tab" data-panel="email" role="tab" aria-selected="false">
+          <i class="fas fa-envelope"></i> Email Composer
+        </button>
+      </div>
+
+      <!-- ══════════════ OVERVIEW TAB ══════════════ -->
+      <div id="panel-overview" class="dash-panel active">
+
+        <!-- Metrics -->
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <span class="metric-val" id="m-registrants">25</span>
+            <span class="metric-lbl">Registrants</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-val" id="m-leaders">13</span>
+            <span class="metric-lbl">Leaders</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-val" id="m-covered">22 hrs</span>
+            <span class="metric-lbl">Covered</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-val" id="m-gap" style="color:#f87171;">2 hrs</span>
+            <span class="metric-lbl">Gap</span>
+          </div>
+        </div>
+
+        <!-- Coverage Bar -->
+        <div class="coverage-bar-wrap">
+          <h4>Coverage — 12-Hour Block</h4>
+          <div class="coverage-bar-track">
+            <!-- 22/24 = 91.7% covered -->
+            <div class="coverage-bar-fill" style="width:91.7%;"></div>
+            <div class="coverage-bar-gap"  style="width:8.3%;"></div>
+          </div>
+          <div class="coverage-bar-legend">
+            <span><span class="legend-dot green"></span> Covered: 22 hrs (91.7%)</span>
+            <span><span class="legend-dot red"></span> Gap: 2 hrs (8.3%) — Slots 6 &amp; 8 partially open</span>
+          </div>
+        </div>
+
+        <!-- Leader Quick Reference -->
+        <h3 style="margin-bottom:1rem;">Leader Quick Reference</h3>
+        <div style="overflow-x:auto;">
+          <table class="leader-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Slot(s)</th>
+                <th>Time(s)</th>
+                <th>Tags</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Aline</td>
+                <td>Slot 1</td>
+                <td>10:00–10:30 PM (Fri)</td>
+                <td>
+                  <span class="badge badge-audio">Audio</span>
+                  <span class="badge badge-cluster">Cluster</span>
+                  <span class="badge badge-fr">FR</span>
+                </td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Ade</td>
+                <td>Slot 2</td>
+                <td>3:30–4:30 AM (Sat)</td>
+                <td><span class="badge badge-both">Both</span></td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Prophetess Annabelle Baldwin</td>
+                <td>Slots 1 &amp; 3</td>
+                <td>11:30 PM–1:00 AM · 4:00–7:00 AM</td>
+                <td>
+                  <span class="badge badge-both">Both</span>
+                  <span class="badge badge-cluster">Cluster</span>
+                  <span class="badge badge-double">Leads ×2</span>
+                </td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>Nadine Kpetchi</td>
+                <td>Slot 2</td>
+                <td>1:00–1:30 AM (Sat)</td>
+                <td>
+                  <span class="badge badge-both">Both</span>
+                  <span class="badge badge-cluster">Cluster</span>
+                  <span class="badge badge-fr">FR</span>
+                </td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>Amanda Ezeugo</td>
+                <td>Slot 2</td>
+                <td>1:30–2:30 AM (Sat)</td>
+                <td><span class="badge badge-both">Both</span></td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td>Pastor Calvin</td>
+                <td>Slot 2</td>
+                <td>2:30–3:30 AM (Sat)</td>
+                <td>
+                  <span class="badge badge-both">Both</span>
+                  <span class="badge badge-cluster">Cluster</span>
+                </td>
+              </tr>
+              <tr>
+                <td>7</td>
+                <td>Moses Ayomide Samuel</td>
+                <td>Slot 3</td>
+                <td>4:00–7:00 AM (Sat)</td>
+                <td><span class="badge badge-audio">Unspecified</span></td>
+              </tr>
+              <tr>
+                <td>8</td>
+                <td>Precious</td>
+                <td>Slot 4</td>
+                <td>7:00–8:00 AM (Sat)</td>
+                <td><span class="badge badge-both">Both</span></td>
+              </tr>
+              <tr>
+                <td>9</td>
+                <td>Susan Onome Ekeh</td>
+                <td>Slot 5</td>
+                <td>10:00–11:00 AM (Sat)</td>
+                <td><span class="badge badge-both">Both</span></td>
+              </tr>
+              <tr>
+                <td>10</td>
+                <td>Joshua Moyosola</td>
+                <td>Slot 7</td>
+                <td>4:00–4:30 PM (Sat)</td>
+                <td>
+                  <span class="badge badge-both">Both</span>
+                  <span class="badge badge-cluster">Cluster</span>
+                </td>
+              </tr>
+              <tr>
+                <td>11</td>
+                <td>Ephraim Josiah</td>
+                <td>Slot 7</td>
+                <td>4:30–6:30 PM (Sat)</td>
+                <td><span class="badge badge-both">Both</span></td>
+              </tr>
+              <tr>
+                <td>12</td>
+                <td>Seth Osadolor</td>
+                <td>Slot 7</td>
+                <td>6:30–7:00 PM (Sat)</td>
+                <td>
+                  <span class="badge badge-audio">Audio</span>
+                  <span class="badge badge-cluster">Cluster</span>
+                </td>
+              </tr>
+              <tr>
+                <td>13</td>
+                <td>Carl Keyman</td>
+                <td>Slot 4</td>
+                <td>8:00–9:00 AM (Sat)</td>
+                <td>
+                  <span class="badge badge-both">Both</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="buffer-note" style="margin-top:1.5rem;">
+          <strong><i class="fas fa-shield-alt"></i> Buffer Coordinator:</strong>
+          Joshua Egbodofo is on standby to cover all unclaimed gaps (Slot 1: 10:30–11:30 PM · Slot 4: 9:00–10:00 AM · Slot 5: 11:00 AM–1:00 PM · Slot 6: full 3 hrs · Slot 8: full 3 hrs).
+          He is <em>not</em> assigned to a slot — he steps in as needed.
+        </div>
+      </div>
+      <!-- end overview -->
+
+      <!-- ══════════════ TIMETABLE TAB ══════════════ -->
+      <div id="panel-timetable" class="dash-panel">
+
+        <!-- SLOT 1 — covered (green) -->
+        <div class="slot-block slot-covered">
+          <div class="slot-header">
+            <span class="slot-title">
+              <i class="fas fa-circle" style="font-size:0.6rem;color:#22c55e;"></i>
+              Slot 1 &mdash; Friday 10 PM &rarr; Saturday 1 AM
+            </span>
+            <span class="slot-status-pill">Covered</span>
+          </div>
+          <div class="slot-body">
+            <div class="slot-row">
+              <span class="time">10:00–10:30 PM</span>
+              <span class="name">Aline</span>
+              <span class="tags">
+                <span class="badge badge-audio">Audio</span>
+                <span class="badge badge-cluster">Cluster</span>
+                <span class="badge badge-fr">French</span>
+              </span>
+            </div>
+            <div class="gap-row">
+              <span class="time">10:30–11:30 PM</span>
+              <span class="gap-label">Joshua Egbodofo buffer — standby coverage</span>
+            </div>
+            <div class="slot-row">
+              <span class="time">11:30 PM–1:00 AM</span>
+              <span class="name">Prophetess Annabelle Baldwin</span>
+              <span class="tags">
+                <span class="badge badge-both">Both</span>
+                <span class="badge badge-cluster">Cluster</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SLOT 2 — partial (amber) -->
+        <div class="slot-block slot-partial">
+          <div class="slot-header">
+            <span class="slot-title">
+              <i class="fas fa-circle" style="font-size:0.6rem;color:#f59e0b;"></i>
+              Slot 2 &mdash; Saturday 1 AM &rarr; 4 AM
+            </span>
+            <span class="slot-status-pill">Partial</span>
+          </div>
+          <div class="slot-body">
+            <div class="slot-row">
+              <span class="time">1:00–1:30 AM</span>
+              <span class="name">Nadine Kpetchi</span>
+              <span class="tags">
+                <span class="badge badge-both">Both</span>
+                <span class="badge badge-cluster">Cluster</span>
+                <span class="badge badge-fr">French</span>
+              </span>
+            </div>
+            <div class="slot-row">
+              <span class="time">1:30–2:30 AM</span>
+              <span class="name">Amanda Ezeugo</span>
+              <span class="tags">
+                <span class="badge badge-both">Both</span>
+              </span>
+            </div>
+            <div class="slot-row">
+              <span class="time">2:30–3:30 AM</span>
+              <span class="name">Pastor Calvin</span>
+              <span class="tags">
+                <span class="badge badge-both">Both</span>
+                <span class="badge badge-cluster">Cluster</span>
+              </span>
+            </div>
+            <div class="slot-row">
+              <span class="time">3:30–4:30 AM</span>
+              <span class="name">Ade</span>
+              <span class="tags">
+                <span class="badge badge-both">Both</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SLOT 3 — covered (green) -->
+        <div class="slot-block slot-covered">
+          <div class="slot-header">
+            <span class="slot-title">
+              <i class="fas fa-circle" style="font-size:0.6rem;color:#22c55e;"></i>
+              Slot 3 &mdash; Saturday 4 AM &rarr; 7 AM
+            </span>
+            <span class="slot-status-pill">Covered</span>
+          </div>
+          <div class="slot-body">
+            <div class="slot-row">
+              <span class="time">4:00–7:00 AM</span>
+              <span class="name">Moses Ayomide Samuel</span>
+              <span class="tags">
+                <span class="badge badge-audio">Connection unspecified</span>
+              </span>
+            </div>
+            <div class="slot-row">
+              <span class="time">4:00–7:00 AM</span>
+              <span class="name">Prophetess Annabelle Baldwin</span>
+              <span class="tags">
+                <span class="badge badge-both">Both</span>
+                <span class="badge badge-cluster">Cluster</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SLOT 4 — partial (amber) -->
+        <div class="slot-block slot-partial">
+          <div class="slot-header">
+            <span class="slot-title">
+              <i class="fas fa-circle" style="font-size:0.6rem;color:#f59e0b;"></i>
+              Slot 4 &mdash; Saturday 7 AM &rarr; 10 AM
+            </span>
+            <span class="slot-status-pill">Partial</span>
+          </div>
+          <div class="slot-body">
+            <div class="slot-row">
+              <span class="time">7:00–8:00 AM</span>
+              <span class="name">Precious</span>
+              <span class="tags">
+                <span class="badge badge-both">Both</span>
+              </span>
+            </div>
+            <div class="slot-row">
+              <span class="time">8:00–9:00 AM</span>
+              <span class="name">Carl Keyman</span>
+              <span class="tags">
+                <span class="badge badge-both">Both</span>
+              </span>
+            </div>
+            <div class="gap-row">
+              <span class="time">9:00–10:00 AM</span>
+              <span class="gap-label">Joshua Egbodofo buffer — Victoire Kamasse withdrew</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SLOT 5 — partial (amber) -->
+        <div class="slot-block slot-partial">
+          <div class="slot-header">
+            <span class="slot-title">
+              <i class="fas fa-circle" style="font-size:0.6rem;color:#f59e0b;"></i>
+              Slot 5 &mdash; Saturday 10 AM &rarr; 1 PM
+            </span>
+            <span class="slot-status-pill">Partial</span>
+          </div>
+          <div class="slot-body">
+            <div class="slot-row">
+              <span class="time">10:00–11:00 AM</span>
+              <span class="name">Susan Onome Ekeh</span>
+              <span class="tags">
+                <span class="badge badge-both">Both</span>
+              </span>
+            </div>
+            <div class="gap-row">
+              <span class="time">11:00 AM–1:00 PM</span>
+              <span class="gap-label">GAP — 2 hrs &mdash; Joshua Egbodofo buffer</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SLOT 6 — empty (red dashed) -->
+        <div class="slot-block slot-empty">
+          <div class="slot-header">
+            <span class="slot-title">
+              <i class="fas fa-circle" style="font-size:0.6rem;color:#f87171;"></i>
+              Slot 6 &mdash; Saturday 1 PM &rarr; 4 PM
+            </span>
+            <span class="slot-status-pill">Empty</span>
+          </div>
+          <div class="slot-body">
+            <div class="empty-slot-msg">
+              <i class="fas fa-exclamation-triangle" style="color:#f87171;margin-right:0.4rem;"></i>
+              Full 3-hour gap &mdash; No confirmed leader &mdash; Joshua Egbodofo buffer
+            </div>
+          </div>
+        </div>
+
+        <!-- SLOT 7 — covered (green) -->
+        <div class="slot-block slot-covered">
+          <div class="slot-header">
+            <span class="slot-title">
+              <i class="fas fa-circle" style="font-size:0.6rem;color:#22c55e;"></i>
+              Slot 7 &mdash; Saturday 4 PM &rarr; 7 PM
+            </span>
+            <span class="slot-status-pill">Covered</span>
+          </div>
+          <div class="slot-body">
+            <div class="slot-row">
+              <span class="time">4:00–4:30 PM</span>
+              <span class="name">Joshua Moyosola</span>
+              <span class="tags">
+                <span class="badge badge-both">Both</span>
+                <span class="badge badge-cluster">Cluster</span>
+              </span>
+            </div>
+            <div class="slot-row">
+              <span class="time">4:30–6:30 PM</span>
+              <span class="name">Ephraim Josiah</span>
+              <span class="tags">
+                <span class="badge badge-both">Both</span>
+              </span>
+            </div>
+            <div class="slot-row">
+              <span class="time">6:30–7:00 PM</span>
+              <span class="name">Seth Osadolor</span>
+              <span class="tags">
+                <span class="badge badge-audio">Audio</span>
+                <span class="badge badge-cluster">Cluster</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SLOT 8 — empty (red dashed) -->
+        <div class="slot-block slot-empty">
+          <div class="slot-header">
+            <span class="slot-title">
+              <i class="fas fa-circle" style="font-size:0.6rem;color:#f87171;"></i>
+              Slot 8 &mdash; Saturday 7 PM &rarr; 10 PM
+            </span>
+            <span class="slot-status-pill">Empty</span>
+          </div>
+          <div class="slot-body">
+            <div class="empty-slot-msg">
+              <i class="fas fa-exclamation-triangle" style="color:#f87171;margin-right:0.4rem;"></i>
+              Full 3-hour gap &mdash; No confirmed leader &mdash; Joshua Egbodofo buffer
+            </div>
+          </div>
+        </div>
+
+        <!-- Buffer note — bottom of timetable, not inside any slot -->
+        <div class="buffer-note">
+          <strong><i class="fas fa-shield-alt"></i> Buffer Note — Joshua Egbodofo:</strong>
+          Joshua Egbodofo is the designated buffer coordinator for all unclaimed time. He is <em>not</em> assigned to any slot row above.
+          He covers: Slot 1 (10:30–11:30 PM) · Slot 4 (9:00–10:00 AM) · Slot 5 (11:00 AM–1:00 PM) · Slot 6 (full 3 hrs, 1–4 PM) · Slot 8 (full 3 hrs, 7–10 PM).
+          Total gap coverage responsibility: <strong>~8.5 hrs on standby</strong>.
+        </div>
+
+      </div>
+      <!-- end timetable -->
+
+      <!-- ══════════════ EMAIL COMPOSER TAB ══════════════ -->
+      <div id="panel-email" class="dash-panel">
+        <div class="email-composer">
+          <h3 style="margin-bottom:1.2rem;">Compose Leader Message</h3>
+
+          <div class="form-group">
+            <label for="email-recipient">Recipient</label>
+            <select id="email-recipient">
+              <option value="">— Select a leader —</option>
+              <option>Aline</option>
+              <option>Ade</option>
+              <option>Prophetess Annabelle Baldwin</option>
+              <option>Nadine Kpetchi</option>
+              <option>Amanda Ezeugo</option>
+              <option>Pastor Calvin</option>
+              <option>Moses Ayomide Samuel</option>
+              <option>Precious</option>
+              <option>Susan Onome Ekeh</option>
+              <option>Joshua Moyosola</option>
+              <option>Ephraim Josiah</option>
+              <option>Seth Osadolor</option>
+              <option>Carl Keyman</option>
+              <option value="all">All Leaders (group)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="email-subject">Subject</label>
+            <input type="text" id="email-subject" placeholder="e.g. Your slot confirmation — Tehilah World Worship">
+          </div>
+
+          <div class="form-group">
+            <label for="email-body">Message</label>
+            <textarea id="email-body" placeholder="Type your message here..."></textarea>
+          </div>
+
+          <div class="email-actions">
+            <button class="btn btn-primary" onclick="saveEmailDraft()">
+              <i class="fas fa-save"></i> Save Draft
+            </button>
+            <button class="btn-secondary" onclick="loadEmailDraft()">
+              <i class="fas fa-folder-open"></i> Load Draft
+            </button>
+            <button class="btn-secondary" onclick="clearEmail()">
+              <i class="fas fa-trash-alt"></i> Clear
+            </button>
+          </div>
+          <div class="save-indicator" id="save-indicator">
+            <i class="fas fa-check-circle"></i> Draft saved locally.
+          </div>
+        </div>
+      </div>
+      <!-- end email -->
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>Tehilah <span>World Worship</span></h3>
+          <p>A global movement of prayer and worship across nations. March 1–21, 2026.</p>
+          <div class="social-links" style="margin-top:1rem;">
+            <a href="https://www.instagram.com/tehilahworldworship?igsh=OGNpNnZlYnFkcG0z" target="_blank" rel="noopener" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.tiktok.com/@tehilahworldworsh?_r=1&_t=ZG-945OzaO6s9A" target="_blank" rel="noopener" class="social-link" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+            <a href="#" class="social-link" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="https://wa.me/4915510653317" target="_blank" rel="noopener" class="social-link" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="#" class="social-link" aria-label="MixLR"><i class="fas fa-headphones"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Pages</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="schedule.html">Schedule</a></li>
+            <li><a href="watch-live.html">Watch Live</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Engage</h4>
+          <ul>
+            <li><a href="media-hub.html">Media Hub</a></li>
+            <li><a href="participate.html">Participate</a></li>
+            <li><a href="volunteer.html">Volunteer</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <ul>
+            <li><a href="https://luma.com/tuikiyd9" target="_blank" rel="noopener">Register (Luma)</a></li>
+            <li><a href="https://www.instagram.com/tehilahworldworship?igsh=OGNpNnZlYnFkcG0z" target="_blank" rel="noopener">Instagram</a></li>
+            <li><a href="https://www.tiktok.com/@tehilahworldworsh?_r=1&_t=ZG-945OzaO6s9A" target="_blank" rel="noopener">TikTok</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Tehilah World Worship. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script>
+    // ── Tab switching ──
+    document.querySelectorAll('.dash-tab').forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        document.querySelectorAll('.dash-tab').forEach(function(t) {
+          t.classList.remove('active');
+          t.setAttribute('aria-selected', 'false');
+        });
+        document.querySelectorAll('.dash-panel').forEach(function(p) {
+          p.classList.remove('active');
+        });
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+        var panelId = 'panel-' + tab.getAttribute('data-panel');
+        document.getElementById(panelId).classList.add('active');
+        // Persist active tab
+        try { localStorage.setItem('dash_active_tab', tab.getAttribute('data-panel')); } catch(e) {}
+      });
+    });
+
+    // ── Restore last active tab ──
+    (function() {
+      try {
+        var saved = localStorage.getItem('dash_active_tab');
+        if (saved) {
+          var t = document.querySelector('.dash-tab[data-panel="' + saved + '"]');
+          if (t) t.click();
+        }
+      } catch(e) {}
+    })();
+
+    // ── Email composer localStorage ──
+    function saveEmailDraft() {
+      try {
+        localStorage.setItem('dash_email_recipient', document.getElementById('email-recipient').value);
+        localStorage.setItem('dash_email_subject',   document.getElementById('email-subject').value);
+        localStorage.setItem('dash_email_body',      document.getElementById('email-body').value);
+        var ind = document.getElementById('save-indicator');
+        ind.style.display = 'block';
+        setTimeout(function() { ind.style.display = 'none'; }, 3000);
+      } catch(e) {}
+    }
+
+    function loadEmailDraft() {
+      try {
+        var r = localStorage.getItem('dash_email_recipient');
+        var s = localStorage.getItem('dash_email_subject');
+        var b = localStorage.getItem('dash_email_body');
+        if (r) document.getElementById('email-recipient').value = r;
+        if (s) document.getElementById('email-subject').value   = s;
+        if (b) document.getElementById('email-body').value      = b;
+      } catch(e) {}
+    }
+
+    function clearEmail() {
+      document.getElementById('email-recipient').value = '';
+      document.getElementById('email-subject').value   = '';
+      document.getElementById('email-body').value      = '';
+      try {
+        localStorage.removeItem('dash_email_recipient');
+        localStorage.removeItem('dash_email_subject');
+        localStorage.removeItem('dash_email_body');
+      } catch(e) {}
+    }
+
+    // Auto-load draft on page open
+    loadEmailDraft();
+  </script>
+</body>
+</html>
