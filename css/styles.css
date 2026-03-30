@@ -1276,141 +1276,7 @@ h3 { font-size: clamp(1.2rem, 2.5vw, 1.5rem); }
   transform: translateY(0);
 }
 
-/* ============================================
-   CLOUD ANIMATIONS
-   ============================================ */
-.cloud-layer {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.cloud {
-  position: absolute;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 100px;
-}
-
-.cloud::before,
-.cloud::after {
-  content: '';
-  position: absolute;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
-}
-
-/* Negative delays = cloud is already mid-drift when page loads */
-
-/* Cloud 1 — large, upper area */
-.cloud-1 {
-  width: 260px;
-  height: 60px;
-  top: 16%;
-  animation: cloud-drift 50s linear infinite -5s;
-}
-.cloud-1::before {
-  width: 100px; height: 100px;
-  top: -52px; left: 35px;
-}
-.cloud-1::after {
-  width: 140px; height: 140px;
-  top: -72px; right: 35px;
-}
-
-/* Cloud 2 — medium, mid */
-.cloud-2 {
-  width: 180px;
-  height: 48px;
-  top: 38%;
-  animation: cloud-drift 65s linear infinite -20s;
-}
-.cloud-2::before {
-  width: 75px; height: 75px;
-  top: -38px; left: 25px;
-}
-.cloud-2::after {
-  width: 100px; height: 100px;
-  top: -50px; right: 22px;
-}
-
-/* Cloud 3 — large, lower */
-.cloud-3 {
-  width: 300px;
-  height: 68px;
-  top: 62%;
-  animation: cloud-drift 55s linear infinite -30s;
-}
-.cloud-3::before {
-  width: 110px; height: 110px;
-  top: -58px; left: 55px;
-}
-.cloud-3::after {
-  width: 150px; height: 150px;
-  top: -78px; right: 45px;
-}
-
-/* Cloud 4 — small, near bottom */
-.cloud-4 {
-  width: 150px;
-  height: 40px;
-  top: 78%;
-  animation: cloud-drift 72s linear infinite -45s;
-}
-.cloud-4::before {
-  width: 65px; height: 65px;
-  top: -32px; left: 20px;
-}
-.cloud-4::after {
-  width: 85px; height: 85px;
-  top: -42px; right: 18px;
-}
-
-/* Cloud 5 — medium, upper-mid */
-.cloud-5 {
-  width: 210px;
-  height: 52px;
-  top: 27%;
-  animation: cloud-drift 58s linear infinite -15s;
-}
-.cloud-5::before {
-  width: 88px; height: 88px;
-  top: -44px; left: 30px;
-}
-.cloud-5::after {
-  width: 115px; height: 115px;
-  top: -58px; right: 28px;
-}
-
-/* Cloud 6 — small wisp, very top */
-.cloud-6 {
-  width: 130px;
-  height: 34px;
-  top: 8%;
-  animation: cloud-drift 80s linear infinite -55s;
-}
-.cloud-6::before {
-  width: 55px; height: 55px;
-  top: -28px; left: 18px;
-}
-.cloud-6::after {
-  width: 70px; height: 70px;
-  top: -35px; right: 15px;
-}
-
-@keyframes cloud-drift {
-  0% {
-    transform: translateX(-420px);
-    opacity: 0;
-  }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% {
-    transform: translateX(calc(100vw + 420px));
-    opacity: 0;
-  }
-}
+/* Cloud animation is handled by js/clouds-animation.js via canvas */
 
 /* ============================================
    THE GLORY EVENT SECTION
@@ -1429,15 +1295,58 @@ h3 { font-size: clamp(1.2rem, 2.5vw, 1.5rem); }
 }
 
 .glory-card {
-  background: linear-gradient(135deg, rgba(212, 168, 83, 0.1), rgba(0, 0, 0, 0.35));
   border: 1px solid rgba(212, 168, 83, 0.45);
-  border-radius: 1.25rem;
-  padding: 3rem 2rem;
-  max-width: 800px;
+  border-radius: 1.5rem;
+  max-width: 860px;
   margin: 0 auto;
-  text-align: center;
+  overflow: hidden;
   position: relative;
   z-index: 1;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(212, 168, 83, 0.2);
+}
+
+/* Image banner */
+.glory-image-wrap {
+  position: relative;
+  height: 280px;
+  overflow: hidden;
+}
+
+.glory-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  display: block;
+  transition: transform 8s ease;
+}
+
+.glory-card:hover .glory-image {
+  transform: scale(1.04);
+}
+
+.glory-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(13, 0, 32, 0.15) 0%,
+    rgba(13, 0, 32, 0.0) 40%,
+    rgba(13, 0, 32, 0.85) 100%
+  );
+}
+
+.glory-image-label {
+  position: absolute;
+  top: 1.25rem;
+  left: 1.5rem;
+}
+
+/* Text body */
+.glory-body {
+  background: linear-gradient(135deg, rgba(212, 168, 83, 0.08), rgba(0, 0, 0, 0.4));
+  padding: 2.5rem 2rem 3rem;
+  text-align: center;
 }
 
 .glory-badge {
@@ -1450,20 +1359,19 @@ h3 { font-size: clamp(1.2rem, 2.5vw, 1.5rem); }
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--color-gold);
-  margin-bottom: 1.25rem;
 }
 
 .glory-title {
-  font-size: clamp(2rem, 6vw, 3.2rem);
+  font-size: clamp(2.2rem, 6vw, 3.5rem);
   font-weight: 800;
   letter-spacing: 0.04em;
-  margin-bottom: 0.4rem;
+  margin: 0.75rem 0 0.35rem;
   color: var(--color-white);
 }
 
 .glory-tagline {
   color: var(--color-gold);
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   font-weight: 600;
   margin-bottom: 1.5rem;
 }
@@ -1471,9 +1379,9 @@ h3 { font-size: clamp(1.2rem, 2.5vw, 1.5rem); }
 .glory-meta {
   display: flex;
   justify-content: center;
-  gap: 2rem;
+  gap: 1.75rem;
   flex-wrap: wrap;
-  margin-bottom: 1.75rem;
+  margin-bottom: 1.5rem;
   color: var(--color-text-muted);
   font-size: 0.95rem;
 }
@@ -1484,11 +1392,10 @@ h3 { font-size: clamp(1.2rem, 2.5vw, 1.5rem); }
 
 .glory-desc {
   color: var(--color-text-muted);
-  margin-bottom: 2rem;
-  max-width: 580px;
-  margin-left: auto;
-  margin-right: auto;
-  line-height: 1.8;
+  margin: 0 auto 2.25rem;
+  max-width: 600px;
+  line-height: 1.85;
+  font-size: 1.02rem;
 }
 
 .glory-actions {
@@ -1496,4 +1403,9 @@ h3 { font-size: clamp(1.2rem, 2.5vw, 1.5rem); }
   gap: 1rem;
   justify-content: center;
   flex-wrap: wrap;
+}
+
+@media (max-width: 600px) {
+  .glory-image-wrap { height: 200px; }
+  .glory-body { padding: 2rem 1.25rem 2.5rem; }
 }

@@ -52,16 +52,6 @@
   <section class="hero">
     <canvas id="hero-canvas" aria-hidden="true"></canvas>
 
-    <!-- Cloud Animation Layer -->
-    <div class="cloud-layer" aria-hidden="true">
-      <div class="cloud cloud-1"></div>
-      <div class="cloud cloud-2"></div>
-      <div class="cloud cloud-3"></div>
-      <div class="cloud cloud-4"></div>
-      <div class="cloud cloud-5"></div>
-      <div class="cloud cloud-6"></div>
-    </div>
-
     <div class="hero-content">
       <div class="hero-label">April 13 – 14, 2026</div>
       <h1>Tehilah <span>World Worship</span></h1>
@@ -83,27 +73,40 @@
   <!-- ==================== THE GLORY — NEXT EVENT ==================== -->
   <section class="section glory-section">
     <div class="container">
-      <div class="section-header reveal">
-        <h2>The Next Event</h2>
-        <div class="section-divider"></div>
-      </div>
       <div class="glory-card reveal">
-        <div class="glory-badge">Upcoming Event</div>
-        <h3 class="glory-title">The Glory</h3>
-        <p class="glory-tagline">12-Hour Charge</p>
-        <div class="glory-meta">
-          <span><i class="fas fa-calendar" style="color:var(--color-gold);margin-right:0.4rem;"></i><strong>April 13 – 14, 2026</strong></span>
-          <span><i class="fas fa-clock" style="color:var(--color-gold);margin-right:0.4rem;"></i><strong>6:00 PM (CET)</strong></span>
-          <span><i class="fas fa-globe" style="color:var(--color-gold);margin-right:0.4rem;"></i><strong>Online — All Nations</strong></span>
+        <!-- Event image banner -->
+        <div class="glory-image-wrap">
+          <img
+            src="https://images.unsplash.com/photo-1508739773434-c26b3d09e071?w=1200&q=80&fit=crop"
+            alt="Rays of light through clouds — The Glory worship event"
+            class="glory-image"
+            loading="lazy"
+            onerror="this.parentElement.style.display='none'"
+          >
+          <div class="glory-image-overlay"></div>
+          <div class="glory-image-label">
+            <div class="glory-badge">Upcoming Event</div>
+          </div>
         </div>
-        <p class="glory-desc">A concentrated 12-hour encounter with the glory of God — worship, intercession, and prophetic declaration across nations. Mark your calendar and get ready.</p>
-        <div class="glory-actions">
-          <a href="https://luma.com/1ktmtjai" target="_blank" rel="noopener" class="btn btn-primary btn-lg">
-            <i class="fas fa-pen-to-square"></i> Register on Luma
-          </a>
-          <a href="https://calendar.app.google/2hingubrw4Dq9smAA" target="_blank" rel="noopener" class="btn btn-outline btn-lg">
-            <i class="fas fa-calendar-plus"></i> Add to Google Calendar
-          </a>
+
+        <!-- Event details -->
+        <div class="glory-body">
+          <h3 class="glory-title">The Glory</h3>
+          <p class="glory-tagline">12-Hour Charge Across Nations</p>
+          <div class="glory-meta">
+            <span><i class="fas fa-calendar" style="color:var(--color-gold);margin-right:0.4rem;"></i><strong>April 13 – 14, 2026</strong></span>
+            <span><i class="fas fa-clock" style="color:var(--color-gold);margin-right:0.4rem;"></i><strong>6:00 PM (CET)</strong></span>
+            <span><i class="fas fa-globe" style="color:var(--color-gold);margin-right:0.4rem;"></i><strong>Online — All Nations</strong></span>
+          </div>
+          <p class="glory-desc">A concentrated 12-hour encounter with the glory of God — worship, intercession, and prophetic declaration across nations. Get ready to be part of something historic.</p>
+          <div class="glory-actions">
+            <a href="https://luma.com/1ktmtjai" target="_blank" rel="noopener" class="btn btn-primary btn-lg">
+              <i class="fas fa-pen-to-square"></i> Register on Luma
+            </a>
+            <a href="https://calendar.app.google/2hingubrw4Dq9smAA" target="_blank" rel="noopener" class="btn btn-outline btn-lg">
+              <i class="fas fa-calendar-plus"></i> Add to Calendar
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -319,6 +322,6 @@
 
   <script src="js/media-data.js"></script>
   <script src="js/app.js"></script>
-  <script src="js/hero-animation.js"></script>
+  <script src="js/clouds-animation.js"></script>
 </body>
 </html>
