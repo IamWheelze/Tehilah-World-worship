@@ -40,15 +40,15 @@ function initCountdown() {
   const el = document.getElementById('countdown');
   if (!el) return;
 
-  // Target: March 20, 2026 at 15:00 CET (UTC+1)
-  const target = new Date('2026-03-20T14:00:00Z'); // 15:00 CET = 14:00 UTC
+  // Target: April 13, 2026 at 18:00 CET (UTC+2 in summer) = 16:00 UTC
+  const target = new Date('2026-04-13T16:00:00Z'); // 18:00 CET = 16:00 UTC
 
   function update() {
     const now = new Date();
     const diff = target - now;
 
     if (diff <= 0) {
-      el.innerHTML = '<div class="countdown-label">The 24-Hour Worship Has Begun — Join us now! 🙏</div>';
+      el.innerHTML = '<div class="countdown-label">The Glory Has Begun — Join us now! 🙏</div>';
       return;
     }
 
@@ -58,7 +58,7 @@ function initCountdown() {
     const seconds = Math.floor((diff / 1000) % 60);
 
     el.innerHTML = `
-      <div class="countdown-label">Countdown to 24-Hour Worship</div>
+      <div class="countdown-label">Countdown to The Glory — April 13</div>
       <div class="countdown-unit">
         <span class="countdown-number">${days}</span>
         <span class="countdown-text">Days</span>
