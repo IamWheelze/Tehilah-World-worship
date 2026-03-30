@@ -116,6 +116,7 @@ function initMediaHub() {
     grid.innerHTML = items.map(item => {
       const platformClass = `tag-${item.platform.toLowerCase()}`;
       const platformIcon = getPlatformIcon(item.platform);
+      const isInstagram = item.platform === 'Instagram';
 
       let thumbHTML = '';
       if (item.platform === 'YouTube' && item.url) {
@@ -123,11 +124,9 @@ function initMediaHub() {
         if (videoId) {
           thumbHTML = `<iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen loading="lazy"></iframe>`;
         }
-      } else if (item.platform === 'Instagram' && item.url) {
-        thumbHTML = `<a href="${escapeAttr(item.url)}" target="_blank" rel="noopener" class="thumb-placeholder">
-          <i class="fab fa-instagram"></i>
-          <span>View on Instagram</span>
-        </a>`;
+      } else if (isInstagram && item.url) {
+        const embedUrl = getInstagramEmbedUrl(item.url);
+        thumbHTML = `<iframe src="${escapeAttr(embedUrl)}" allowfullscreen loading="lazy" scrolling="no"></iframe>`;
       } else if (item.platform === 'TikTok' && item.url) {
         thumbHTML = `<a href="${escapeAttr(item.url)}" target="_blank" rel="noopener" class="thumb-placeholder">
           <i class="fab fa-tiktok"></i>
@@ -141,7 +140,7 @@ function initMediaHub() {
 
       return `
         <div class="media-card">
-          <div class="media-card-thumb">${thumbHTML}</div>
+          <div class="media-card-thumb${isInstagram ? ' thumb-instagram' : ''}">${thumbHTML}</div>
           <div class="media-card-body">
             <div class="media-card-meta">
               <span class="media-tag ${platformClass}">${escapeHTML(item.platform)}</span>
@@ -186,14 +185,29 @@ function initFeaturedMedia() {
   const featured = MEDIA_DATA.slice(0, 6);
   strip.innerHTML = featured.map(item => {
     const platformClass = `tag-${item.platform.toLowerCase()}`;
+    const isInstagram = item.platform === 'Instagram';
+
+    let thumbHTML = '';
+    if (item.platform === 'YouTube' && item.url) {
+      const videoId = getYouTubeId(item.url);
+      if (videoId) {
+        thumbHTML = `<iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen loading="lazy"></iframe>`;
+      }
+    } else if (isInstagram && item.url) {
+      const embedUrl = getInstagramEmbedUrl(item.url);
+      thumbHTML = `<iframe src="${escapeAttr(embedUrl)}" allowfullscreen loading="lazy" scrolling="no"></iframe>`;
+    } else if (item.platform === 'TikTok' && item.url) {
+      thumbHTML = `<a href="${escapeAttr(item.url)}" target="_blank" rel="noopener" class="thumb-placeholder">
+        <i class="fab fa-tiktok"></i><span>View on TikTok</span></a>`;
+    } else if (item.platform === 'Photo' && item.thumbnail) {
+      thumbHTML = `<img src="${escapeAttr(item.thumbnail)}" alt="${escapeAttr(item.title)}" loading="lazy">`;
+    } else {
+      thumbHTML = `<div class="thumb-placeholder"><i class="${getPlatformIcon(item.platform)}"></i><span>${escapeHTML(item.platform)}</span></div>`;
+    }
+
     return `
       <div class="media-card">
-        <div class="media-card-thumb">
-          <div class="thumb-placeholder">
-            <i class="${getPlatformIcon(item.platform)}"></i>
-            <span>${escapeHTML(item.platform)}</span>
-          </div>
-        </div>
+        <div class="media-card-thumb${isInstagram ? ' thumb-instagram' : ''}">${thumbHTML}</div>
         <div class="media-card-body">
           <div class="media-card-meta">
             <span class="media-tag ${platformClass}">${escapeHTML(item.platform)}</span>
@@ -284,6 +298,11 @@ function getPlatformIcon(platform) {
 function getYouTubeId(url) {
   const match = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
   return match ? match[1] : null;
+}
+
+function getInstagramEmbedUrl(url) {
+  // Strip query params, ensure trailing slash, append embed/
+  return url.split('?')[0].replace(/\/?$/, '/') + 'embed/';
 }
 
 function escapeHTML(str) {

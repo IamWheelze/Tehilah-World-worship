@@ -5,7 +5,7 @@
    to the MEDIA_DATA array below with these fields:
 
    title       - Display title (required)
-   date        - Date string, e.g. "March 5, 2025" (required)
+   date        - Date string, e.g. "March 5, 2026" (required)
    nation      - Country/nation tag (required)
    category    - One of: "Nation Videos", "Countdown Clips",
                  "Participation Photos", "Live Highlights",
@@ -18,93 +18,75 @@
 
 const MEDIA_DATA = [
   {
-    title: "Tehilah World Worship - Official Promo",
-    date: "March 1, 2025",
+    title: "The Glory — Announcement Reel",
+    date: "March 28, 2026",
     nation: "Global",
-    category: "Countdown Clips",
-    platform: "YouTube",
-    url: "",
-    thumbnail: "",
-    description: "Official promotional video for the 21-day prayer and 24-hour worship event."
-  },
-  {
-    title: "Worship Night Countdown - France",
-    date: "March 3, 2025",
-    nation: "France",
     category: "Countdown Clips",
     platform: "Instagram",
-    url: "https://www.instagram.com/tehilahworldworship",
-    thumbnail: "",
-    description: "Countdown reel from the France worship team."
+    url: "https://www.instagram.com/reel/DVg7QQTjAnJ/",
+    description: "Official announcement for The Glory — 12-Hour Charge, April 13–14."
   },
   {
-    title: "Prayer from Cameroon",
-    date: "March 5, 2025",
-    nation: "Cameroon",
-    category: "Nation Videos",
-    platform: "YouTube",
-    url: "",
-    thumbnail: "",
-    description: "Beautiful prayer recording from Cameroon."
-  },
-  {
-    title: "Tehilah Worship Dance - Nigeria",
-    date: "March 7, 2025",
-    nation: "Nigeria",
-    category: "Nation Videos",
-    platform: "TikTok",
-    url: "https://www.tiktok.com/@tehilahworldworsh",
-    thumbnail: "",
-    description: "Worship dance clip from the Nigerian team."
-  },
-  {
-    title: "Global Participation - Photo Wall",
-    date: "March 10, 2025",
+    title: "Tehilah World Worship Recap",
+    date: "March 26, 2026",
     nation: "Global",
-    category: "Participation Photos",
-    platform: "Photo",
-    url: "",
-    thumbnail: "",
-    description: "Photos from participants around the world."
+    category: "Recap & Testimonies",
+    platform: "Instagram",
+    url: "https://www.instagram.com/reel/DVXpwtjDP2X/",
+    description: "A recap of the 21 Days of Prayer and 12-Hour Worship."
   },
   {
-    title: "Day 12 Prayer Highlights",
-    date: "March 12, 2025",
+    title: "Worship Highlights Reel",
+    date: "March 24, 2026",
     nation: "Global",
     category: "Live Highlights",
-    platform: "YouTube",
-    url: "",
-    thumbnail: "",
-    description: "Highlights from the Day 12 prayer session."
-  },
-  {
-    title: "Testimony - Russia",
-    date: "March 15, 2025",
-    nation: "Russia",
-    category: "Recap & Testimonies",
     platform: "Instagram",
-    url: "https://www.instagram.com/tehilahworldworship",
-    thumbnail: "",
-    description: "A powerful testimony shared from Russia."
+    url: "https://www.instagram.com/reel/DV7vxYhjB-4/",
+    description: "Highlights from the global worship gathering."
   },
   {
-    title: "24-Hour Worship Recap",
-    date: "March 21, 2025",
+    title: "Nations in Worship",
+    date: "March 23, 2026",
+    nation: "Global",
+    category: "Nation Videos",
+    platform: "Instagram",
+    url: "https://www.instagram.com/reel/DV5W9t3jPCi/",
+    description: "Worshippers from across the nations joining together."
+  },
+  {
+    title: "Live Worship Moment",
+    date: "March 21, 2026",
+    nation: "Global",
+    category: "Live Highlights",
+    platform: "Instagram",
+    url: "https://www.instagram.com/reel/DVsRKBQjFKU/",
+    description: "A powerful live worship moment from the 12-Hour Charge."
+  },
+  {
+    title: "Praise & Intercession Clip",
+    date: "March 20, 2026",
+    nation: "Global",
+    category: "Countdown Clips",
+    platform: "Instagram",
+    url: "https://www.instagram.com/reel/DVlGd7zDLWQ/",
+    description: "Worship and intercession in the final countdown."
+  },
+  {
+    title: "Community Testimony Post",
+    date: "March 29, 2026",
     nation: "Global",
     category: "Recap & Testimonies",
-    platform: "YouTube",
-    url: "",
-    thumbnail: "",
-    description: "Full recap of the 24-hour continuous worship event."
+    platform: "Instagram",
+    url: "https://www.instagram.com/p/DWGlBJUjCpz/",
+    description: "Testimonies from the global worship community."
   },
   {
-    title: "Participation Photo - DR Congo",
-    date: "March 8, 2025",
-    nation: "DR Congo",
+    title: "Participation from the Nations",
+    date: "March 18, 2026",
+    nation: "Global",
     category: "Participation Photos",
-    platform: "Photo",
-    url: "",
-    thumbnail: "",
-    description: "Worship participants from the DR Congo."
+    platform: "Instagram",
+    url: "https://www.instagram.com/p/DVRhG46jDVR/",
+    description: "Photos and posts from worshippers around the world."
   }
 ];

@@ -723,6 +723,11 @@ h3 { font-size: clamp(1.2rem, 2.5vw, 1.5rem); }
   overflow: hidden;
 }
 
+/* Instagram posts/reels are portrait — use taller ratio */
+.media-card-thumb.thumb-instagram {
+  padding-bottom: 120%;
+}
+
 .media-card-thumb iframe {
   position: absolute;
   top: 0; left: 0;
