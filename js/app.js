@@ -35,20 +35,37 @@ function initNav() {
   });
 }
 
+// ===================== THEME TOGGLE =====================
+function initThemeToggle() {
+  const toggle = document.getElementById('theme-toggle');
+  if (!toggle) return;
+
+  const saved = localStorage.getItem('tww-theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', saved);
+  toggle.querySelector('i').className = saved === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+
+  toggle.addEventListener('click', () => {
+    const next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('tww-theme', next);
+    toggle.querySelector('i').className = next === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+  });
+}
+
 // ===================== COUNTDOWN TIMER =====================
 function initCountdown() {
   const el = document.getElementById('countdown');
   if (!el) return;
 
-  // Target: April 13, 2026 at 18:00 CET (UTC+2 in summer) = 16:00 UTC
-  const target = new Date('2026-04-13T16:00:00Z'); // 18:00 CET = 16:00 UTC
+  // Target: June 22, 2026 at 20:00 GMT+1 = 19:00 UTC
+  const target = new Date('2026-06-22T19:00:00Z');
 
   function update() {
     const now = new Date();
     const diff = target - now;
 
     if (diff <= 0) {
-      el.innerHTML = '<div class="countdown-label">The Glory Has Begun — Join us now! 🙏</div>';
+      el.innerHTML = '<div class="countdown-label">24 Hours Worship is Live — Join us on Zoom now!</div>';
       return;
     }
 
@@ -58,7 +75,7 @@ function initCountdown() {
     const seconds = Math.floor((diff / 1000) % 60);
 
     el.innerHTML = `
-      <div class="countdown-label">Countdown to The Glory — April 13</div>
+      <div class="countdown-label">Countdown to 24 Hours Worship — June 22</div>
       <div class="countdown-unit">
         <span class="countdown-number">${days}</span>
         <span class="countdown-text">Days</span>
@@ -352,6 +369,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initNav();
   initCountdown();
   initReveal();
+  initThemeToggle();
   initMediaHub();
   initFeaturedMedia();
   initVolunteerForm();

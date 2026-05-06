@@ -25,6 +25,117 @@
   --transition: 0.3s ease;
 }
 
+/* ============================================
+   LIGHT THEME
+   ============================================ */
+[data-theme="light"] {
+  --color-bg: #ffffff;
+  --color-bg-alt: #f7f3ff;
+  --color-surface: #efe8ff;
+  --color-surface-light: #e2d4ff;
+  --color-text: #1a0a2e;
+  --color-text-muted: #614882;
+  --color-border: #d5c7eb;
+}
+
+[data-theme="light"] h1,
+[data-theme="light"] h2,
+[data-theme="light"] h3,
+[data-theme="light"] h4 {
+  color: #1a0a2e;
+}
+
+[data-theme="light"] .site-nav {
+  background: rgba(255, 255, 255, 0.97);
+  border-bottom-color: var(--color-border);
+}
+
+[data-theme="light"] .nav-brand {
+  color: #1a0a2e;
+}
+
+[data-theme="light"] .nav-links a {
+  color: var(--color-text-muted);
+}
+
+[data-theme="light"] .nav-links a:hover,
+[data-theme="light"] .nav-links a.active {
+  color: #1a0a2e;
+  background: var(--color-surface);
+}
+
+[data-theme="light"] .nav-toggle {
+  color: #1a0a2e;
+}
+
+[data-theme="light"] .nav-links {
+  background: #ffffff;
+}
+
+[data-theme="light"] .hero::before {
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(212, 168, 83, 0.07) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(150, 80, 255, 0.05) 0%, transparent 50%);
+}
+
+[data-theme="light"] #hero-canvas { opacity: 0.05; }
+
+[data-theme="light"] .countdown-number {
+  color: #1a0a2e;
+}
+
+[data-theme="light"] .btn-outline {
+  color: #1a0a2e;
+  border-color: var(--color-border);
+}
+
+[data-theme="light"] .btn-outline:hover {
+  color: var(--color-gold-dark);
+  border-color: var(--color-gold);
+}
+
+[data-theme="light"] .btn-secondary {
+  color: #1a0a2e;
+}
+
+[data-theme="light"] .btn-secondary:hover {
+  color: #1a0a2e;
+  background: var(--color-surface-light);
+}
+
+[data-theme="light"] .footer-col ul a:hover {
+  color: #1a0a2e;
+}
+
+[data-theme="light"] .footer-bottom {
+  border-top-color: var(--color-border);
+}
+
+/* ============================================
+   THEME TOGGLE BUTTON
+   ============================================ */
+.theme-toggle {
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  transition: all var(--transition);
+  flex-shrink: 0;
+  margin-left: 0.5rem;
+}
+
+.theme-toggle:hover {
+  border-color: var(--color-gold);
+  color: var(--color-gold);
+}
+
 /* --- Reset & Base --- */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -124,11 +235,11 @@ h3 { font-size: clamp(1.2rem, 2.5vw, 1.5rem); }
 }
 
 .nav-logo {
-  height: 36px;
+  height: 44px;
   width: auto;
   display: inline-block;
   vertical-align: middle;
-  margin-right: 0.5rem;
+  margin-right: 0.6rem;
   border-radius: 4px;
 }
 

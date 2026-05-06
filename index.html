@@ -18,6 +18,9 @@
   <meta name="twitter:image" content="https://tehilahworldworship.com/images/logo.png">
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script>
+    (function(){var t=localStorage.getItem('tww-theme')||'dark';document.documentElement.setAttribute('data-theme',t);})();
+  </script>
 
   <style>
     /* ── Open Slot row ── */
@@ -97,6 +100,7 @@
         <li><a href="contact.html">Contact</a></li>
         <li><a href="https://luma.com/x8l544o3" target="_blank" rel="noopener" class="nav-register"><i class="fas fa-pen-to-square"></i> Register</a></li>
       </ul>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle light/dark mode"><i class="fas fa-sun"></i></button>
     </div>
   </nav>
 
@@ -110,6 +114,11 @@
     <canvas id="hero-canvas" aria-hidden="true"></canvas>
 
     <div class="hero-content" style="display:flex;flex-direction:column;align-items:center;gap:2rem;">
+
+      <!-- Logo -->
+      <div>
+        <img src="images/logo.png" alt="Tehilah World Worship" style="height:90px;width:auto;filter:drop-shadow(0 2px 12px rgba(212,168,83,0.5));">
+      </div>
 
       <!-- Event Flier — first thing visible -->
       <div style="max-width:420px;width:100%;box-shadow:0 8px 60px rgba(212,168,83,0.4),0 2px 20px rgba(0,0,0,0.7);border-radius:14px;overflow:hidden;border:1px solid rgba(212,168,83,0.35);">
@@ -184,6 +193,30 @@
           </a>
         </div>
 
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ABOUT EVENT ==================== -->
+  <section class="section section-alt" id="about-event">
+    <div class="container">
+      <div style="max-width:800px;margin:0 auto;" class="reveal">
+        <div class="section-header" style="text-align:left;margin-bottom:2rem;">
+          <h2>About Event</h2>
+          <div class="section-divider" style="margin:1rem 0;"></div>
+          <p style="color:var(--color-gold);font-size:1.1rem;font-weight:600;max-width:none;margin:0;">24 Hours of Worship and Intercession</p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:1.25rem;font-size:1rem;line-height:1.85;color:var(--color-text-muted);">
+          <p>Tehilah World Worship will be hosting a 24-hour worship meeting, bringing together worshippers, intercessors, and believers from different nations to raise a continuous altar of worship, praise, prayer, and prophetic intercession before the Most High God.</p>
+          <p>This gathering is a call to stand before the Lord on behalf of nations, territories, families, communities, and God's purposes in the earth. For 24 hours, worship will ascend, prayers will be lifted, and prophetic declarations will be made over continents and nations, as we seek the establishment of God's will and the manifestation of His glory across the earth.</p>
+          <p>The meeting will feature worship sessions, prayer watches, prophetic intercession, scriptural declarations, and moments of spiritual alignment. It is a time to gather as one global family, lifting up the name of Jesus and creating an atmosphere for divine encounter, healing, restoration, and transformation.</p>
+          <p>Through this 24-hour worship meeting, Tehilah World Worship continues its mandate to raise a global altar of worship and praise to the Most High God and to intercede for nations until His glory covers the earth.</p>
+        </div>
+        <div style="margin-top:2rem;">
+          <a href="https://luma.com/x8l544o3" target="_blank" rel="noopener" class="btn btn-primary">
+            <i class="fas fa-pen-to-square"></i> Register Now
+          </a>
+        </div>
       </div>
     </div>
   </section>
